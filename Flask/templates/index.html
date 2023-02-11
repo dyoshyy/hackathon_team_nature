@@ -1,0 +1,29 @@
+{% extends "layout.html " %}
+{% block content %}
+<main>
+  <h1></h1>
+  <h1></h1>
+  <div class="table">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Access</th>
+          <th>Tel</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for elem in list %}
+        <tr>
+          <td>{{ elem[1] }}</td>
+          <td>{{ elem[2] }}</td>
+          <td>{{ elem[3] }}</td>
+          <td>{{ elem[4] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+{% endblock %}
