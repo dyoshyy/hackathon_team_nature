@@ -30,7 +30,7 @@ def volunteer():
 
 def jidoukaikan():
 
-    conn = sqlite3.connect('test.db')
+    conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS jidoukaikan (id INTEGER PRIMARY KEY, name TEXT, location TEXT, access TEXT, tel TEXT)
@@ -71,7 +71,7 @@ def jidoukaikan():
     for row in cursor.fetchall():
         print(row)
     conn.close()
-    shutil.move('test.db', 'Flask/test.db')     
+    shutil.move('database.db', 'Flask')     
 
 if __name__ == "__main__":
     main()
