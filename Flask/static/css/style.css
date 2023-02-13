@@ -85,11 +85,13 @@ main {
 
 /* 表（数値を入力する部分）の設定 */
 table {
-  width: 80%;
+  width: 90%;
   height: 10px;
+  margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
   border-spacing: 5px 5px;
+  table-layout: fixed;
 }
 
 th {
@@ -101,6 +103,16 @@ th {
   text-align: center;
   padding: 10px;
   background-color: rgb(41, 61, 99);
+}
+
+
+/* 各列の幅を指定 */
+
+th:first-child, td:first-child {
+  width: 10%;
+}
+th:nth-child(4), td:nth-child(4) {
+  width: 10%;
 }
 
 td {
