@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends "layout.html " %}
+{% block content %}
+<html>
+<head>
+  <title>Login Page</title>
+</head>
+<body>
+    <style>
+        body {
+          background-color: rgb(255, 255, 255);
+          color: black;
+        }
+      </style>
+    <!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .login-form {
+      text-align: center;
+      margin: auto;
+      width: 50%;
+      padding: 20px;
+    }
+  </style>
+  <h1>ログイン</h1>
+  <div class="login-form">
+  <form method = "POST" action="/login">
+    <label for="お名前">お名前:</label>
+    <input type="text" id="お名前" name="name">
+    <br><br>
+    <label for="パスワード">パスワード:</label>
+    <input type="パスワード" id="パスワード" name="pass">
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+</body>
+</html>
+{% endblock %}
