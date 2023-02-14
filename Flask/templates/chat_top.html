@@ -1,0 +1,36 @@
+{% extends "layout.html " %}
+{% block content %}
+<main>
+    <h1>区を選択してください</h1>
+    <style>
+        button {
+          background-color: #82c6e6;
+          color: white;
+          font-size: 30px;
+          width: 150px;
+          height: 100px;
+          margin: 10px;
+          border: none;
+          border-radius: 5px;
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+          transition: background-color 0.3s;
+        }
+        button:hover {
+          background-color: #386dff;
+        }
+    </style>
+    <form>
+        <button type="submit" name="ku" value="chuo"><a href="/board/chuo">中央区</a></button>
+        <button type="submit" name="ku" value="kita">北区</button>
+        <button type="submit" name="ku" value="minami">南区</button>
+        <button type="submit" name="ku" value="higashi">東区</button>
+        <button type="submit" name="ku" value="nishi">西区</button>
+        <br>
+        <button type="submit" name="ku" value="atsubetsu">厚別区</button>
+        <button type="submit" name="ku" value="toyohira">豊平区</button>
+        <button type="submit" name="ku" value="kiyota">清田区</button>
+        <button type="submit" name="ku" value="teine">手稲区</button>
+        <button type="submit" name="ku" value="shiroishi">白石区</button>
+      </form>
+</main>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "layout.html " %}
+{% block content %}
+
+<head>
+  <title>{{ board_name }} Board</title>
+</head>
+
+<body>
+  <h1>{{ board_name }} Board</h1>
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+    {{ form.message.label }} {{ form.message() }}
+    {{ form.submit() }}
+  </form>
+  {% for message in messages %}
+  <p>{{ message.text }}</p>
+  {% endfor %}
+</body>
+
+{% endblock %}

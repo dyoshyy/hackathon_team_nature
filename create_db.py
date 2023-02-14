@@ -8,6 +8,8 @@ c = conn.cursor()
 
 c.execute('''CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT,
                                  username TEXT,
-                                 password TEXT)''')
+                                 password TEXT,
+                                 gender TEXT,
+                                 mail TEXT)''')
 conn.commit()
 conn.close()
