@@ -1,20 +1,45 @@
 {% extends "layout.html " %}
 {% block content %}
+<style>
+    .fixed-input {
+      position: fixed;  /* 要素を固定位置にする */
+      bottom: 0;        /* 要素を画面の下部に固定する */
+      width: 100%;      /* 要素の幅を100%にする */
+      padding: 10px;    /* 要素内部の余白を設定する */
+      size: 30px;
+      background-color: #1b2533; /* 背景色を設定する */
+      border-top: 1px solid #1b2533; /* 上部の境界線を設定する */
+    }
+    .fixed-input input {
+      width: 97%;      /* 入力フィールドの幅を100%にする */
+      border: none;
+      text-align: left;
+    }
 
-<head>
-  <title>{{ board_name }} Board</title>
-</head>
+    .fixed-input button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  </style>
 
-<body>
-  <h1>{{ board_name }} Board</h1>
-  <form action="" method="post">
-    {{ form.hidden_tag() }}
-    {{ form.message.label }} {{ form.message() }}
-    {{ form.submit() }}
-  </form>
-  {% for message in messages %}
-  <p>{{ message.text }}</p>
+<main>
+  <h1>{{ board_name }}</h1>
+  <div class="fixed-input">
+    <form method="POST" action="{{route}}">
+      <input type="text" name = "content" placeholder="メッセージを入力してください">
+      <br>
+      <button>送信</button>
+    </form>
+  </div>
+
+  {% for post in posts %}
+  <h2>{{post['author']}} &nbsp;{{post['date']}}</h2>
+  <p>{{ post['content'] }}</p>
   {% endfor %}
-</body>
-
+</main>
 {% endblock %}

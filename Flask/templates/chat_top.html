@@ -1,36 +1,76 @@
 {% extends "layout.html " %}
 {% block content %}
 <main>
-    <h1>区を選択してください</h1>
-    <style>
-        button {
-          background-color: #82c6e6;
-          color: white;
-          font-size: 30px;
-          width: 150px;
-          height: 100px;
-          margin: 10px;
-          border: none;
-          border-radius: 5px;
-          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-          transition: background-color 0.3s;
-        }
-        button:hover {
-          background-color: #386dff;
-        }
-    </style>
-    <form>
-        <button type="submit" name="ku" value="chuo"><a href="/board/chuo">中央区</a></button>
-        <button type="submit" name="ku" value="kita">北区</button>
-        <button type="submit" name="ku" value="minami">南区</button>
-        <button type="submit" name="ku" value="higashi">東区</button>
-        <button type="submit" name="ku" value="nishi">西区</button>
-        <br>
-        <button type="submit" name="ku" value="atsubetsu">厚別区</button>
-        <button type="submit" name="ku" value="toyohira">豊平区</button>
-        <button type="submit" name="ku" value="kiyota">清田区</button>
-        <button type="submit" name="ku" value="teine">手稲区</button>
-        <button type="submit" name="ku" value="shiroishi">白石区</button>
-      </form>
+  <h1>区を選択してください</h1>
+  <style>
+    main {
+      margin: auto;
+    }
+
+    input {
+      background-color: #82c6e6;
+      color: white;
+      font-size: 30px;
+      width: 150px;
+      height: 100px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s;
+
+    }
+
+    input:hover {
+      background-color: #386dff;
+    }
+
+    .buttons {
+      display: flex;
+      padding-left: 150px;
+      padding-right: 150px;
+      flex-wrap: wrap;
+    }
+
+    form {
+      display: flex;
+      flex: 1;
+    }
+
+    .form_row {
+      flex-basis: 100%;
+      margin-bottom: 10px;
+    }
+
+    form label,
+    form input,
+    form button {
+      flex: 1;
+      margin: 10px 10px;
+    }
+
+    @media (min-width: 768px) {
+      .form_row {
+        flex-basis: 50%;
+        margin-bottom: 0;
+      }
+    }
+  </style>
+  <div class="buttons">
+    <div class="form_row">
+      <form action="/board/chuo"><input type="submit" value="中央区"></form>
+      <form action="/board/kita"><input type="submit" value="北区"></form>
+      <form action="/board/minami"><input type="submit" value="南区"></form>
+      <form action="/board/nishi"><input type="submit" value="西区"></form>
+      <form action="/board/higashi"><input type="submit" value="東区"></form>
+    </div>
+    <div class="form_row">
+      <form action="/board/atsubetsu"><input type="submit" value="厚別区"></form>
+      <form action="/board/toyohira"><input type="submit" value="豊平区"></form>
+      <form action="/board/kiyota"><input type="submit" value="清田区"></form>
+      <form action="/board/teine"><input type="submit" value="手稲区"></form>
+      <form action="/board/shiroishi"><input type="submit" value="白石区"></form>
+    </div>
+  </div>
 </main>
 {% endblock %}

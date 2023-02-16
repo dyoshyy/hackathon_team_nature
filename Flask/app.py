@@ -1,20 +1,19 @@
 from flask import Flask, render_template, Request, request, session, redirect, url_for
 import sqlite3
+import datetime
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///boards.db'
-db = SQLAlchemy(app)
 
-class Board(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    messages = db.relationship('Message', backref='board', lazy=True)
+def get_db_connection():
+    conn = sqlite3.connect('board.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
-class Message(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.Text, nullable=False)
-    board_id = db.Column(db.Integer, db.ForeignKey('board.id'), nullable=False)
+@app.teardown_appcontext
+def close_db_connection(exception):
+    conn = get_db_connection()
+    conn.close()
 
 @app.route('/')
 def index():
@@ -71,18 +70,54 @@ def register():
     return render_template('register.html')
 
 @app.route('/chat')
-def chat():
+def chat_top():
     if 'user_id' in session:
         username = session.get('username')
         return render_template('chat_top.html', username= username)
     return redirect(url_for('login'))
 
-@app.route('/board/<name>')
-def board(name):
-    board = Board.query.filter_by(name=name).first()
-    messages = Message.query.filter_by(board=board).all()
-    return render_template('chat.html', board=board, messages=messages)
-
+@app.route('/board/<name>', methods=['GET', 'POST'])
+def chat(name):
+    conn = get_db_connection()
+    username = session.get('username')
+    
+    if name == 'chuo':
+        board_name = "中央区"
+    elif name == 'kita':
+        board_name = "北区"    
+    elif name == 'minami':
+        board_name = "南区"  
+    elif name == 'nishi':
+        board_name = "西区"  
+    elif name == 'higashi':
+        board_name = "東区"  
+    elif name == 'atsubetsu':
+        board_name = "厚別区"  
+    elif name == 'toyohira':
+        board_name = "豊平区"  
+    elif name == 'kiyota':
+        board_name = "清田区"  
+    elif name == 'teine':
+        board_name = "手稲区"  
+    elif name == 'shiroishi':
+        board_name = "白石区"  
+    board_name = board_name + "の掲示板"
+    if username:
+        pass
+    else:
+        username = ''
+    if request.method == 'POST':
+        author = session.get('username')
+        content = request.form['content']
+        date = datetime.datetime.now()
+        c = conn.cursor()
+        c.execute(f'INSERT INTO board_{name} (author, content, date) VALUES (?, ?, ?)', (author, content, date))
+        conn.commit()
+    c = conn.cursor()
+    c.execute(f'SELECT * FROM board_{name} ORDER BY id DESC')
+    posts = c.fetchall()
+    conn.close()
+    return render_template('chat.html', posts=posts, username = username, route = "/board/"+name, board_name = board_name)
 
 if __name__ == "__main__":
     app.run(debug=True)

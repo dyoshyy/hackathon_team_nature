@@ -1,8 +1,29 @@
 {% extends "layout.html " %}
 {% block content %}
+<style>
+  .table {
+  display: none;
+}
+
+.table:target {
+  display: block;
+}
+
+ .tab{
+  display: flex;
+  margin:  auto;
+  color: aliceblue;
+ }
+</style>
+
 
 <main>
-  <div class="table">
+  <div class="tab">
+    <a href="#tab1">児童会館</a>
+    <a href="#tab2">イベント</a>
+  </div>
+
+  <div id="tab1" class="table">
     <table>
       <thead>
         <tr>
@@ -24,5 +45,10 @@
       </tbody>
     </table>
   </div>
+
+  <div id="tab2" class="table">
+    <h1>table2</h1>
+  </div>
+
 </main>
 {% endblock %}
