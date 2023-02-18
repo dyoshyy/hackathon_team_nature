@@ -9,6 +9,9 @@ body {
   font-family: Montserrat;
   color: black;
   background-color: #FFF5E1;
+  display: flex;
+  flex-flow: column;
+  
 }
 
 /* *********************************
@@ -247,7 +250,7 @@ footer {
   /* 幅いっぱいを指定 */
   height: 50px;
   /* 高さを指定 */
-  background-color: rgb(41, 61, 99);
+  background-color: #749B71;
   text-align: end or right;
 }
 

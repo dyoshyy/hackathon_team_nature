@@ -9,9 +9,11 @@
       size: 30px;
       background-color: #1b2533; /* 背景色を設定する */
       border-top: 1px solid #1b2533; /* 上部の境界線を設定する */
+      align-items: left;
     }
     .fixed-input input {
-      width: 97%;      /* 入力フィールドの幅を100%にする */
+      width: 90%;      /* 入力フィールドの幅を100%にする */
+      height: 30px;
       border: none;
       text-align: left;
     }
@@ -24,6 +26,8 @@
       padding: 5px 10px;
       margin-left: 5px;
       cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     .post{
@@ -52,7 +56,6 @@
   <div class="fixed-input">
     <form method="POST" action="{{route}}">
       <input type="text" name = "content" placeholder="メッセージを入力してください">
-      <br>
       <button>送信</button>
     </form>
   </div>

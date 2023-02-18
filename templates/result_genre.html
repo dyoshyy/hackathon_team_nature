@@ -1,0 +1,21 @@
+{% extends "layout.html " %}
+{% block content %}
+
+<main>
+  <h1>ジャンル：&nbsp;{{genre}}</h1>
+
+  <div id="tab1" class="table">
+    {% for elem in table %}
+    <div class="table2-box">
+      <p class="event">{{ elem[1] }}</p>
+      <p class="organization">{{ elem[2] }}</p>
+      <p class="location">{{ elem[3] }}</p>
+      <p class="genre">{{ elem[4] }}</p>
+      <p class="tel2">{{ elem[5] }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+</main>
+
+{% endblock %}

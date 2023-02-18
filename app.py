@@ -1,9 +1,8 @@
 from flask import Flask, render_template, Request, request, session, redirect, url_for
 import sqlite3
 import datetime
-from geo import get_lat_lon_from_address
-from geopy.distance import geodesic
-from geopy.geocoders import Nominatim
+from geo import *
+import numpy as np
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
@@ -18,51 +17,17 @@ def close_db_connection(exception):
     conn = get_db_connection()
     conn.close()
 
-@app.route('/',methods=['GET', 'POST'])
+@app.route('/')
 def index():
 
     #データベースからのデータ取得
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
 
-    if request.method == 'POST':
-
-        c.execute('SELECT region FROM jidoukaikan')
-        address_list = c.fetchall()
-        address_list = list(address_list)
-
-        latlons = []
-        for i,address in enumerate(address_list):
-            add = address[0]
-            #print(address)
-            if '札幌市' not in add:
-                add = '札幌市' + str(add)
-            if '北海道' not in add:
-                add = '北海道' + str(add)
-            pos = add.find('丁目') + 2
-            add = add[:pos]
-            address_list[i] = add
-        geolocator = Nominatim(user_agent="user-id")
-        for address in address_list:
-            location = geolocator.geocode(address)
-            if location:
-                latlons.append((location.latitude,location.longitude))
-                #print(location.latitude,location.longitude)
-        
-        print(latlons)
-
-        c.execute('SELECT * FROM jidoukaikan')
-        table_jidoukaikan = c.fetchall()
-        c.execute('SELECT * FROM event')
-        table_event = c.fetchall()
-        #c.execute('SELECT * FROM event' + query2)
-        #table_event = c.fetchall()
-
-    else:
-        c.execute('SELECT * FROM jidoukaikan')
-        table_jidoukaikan = c.fetchall()
-        c.execute('SELECT * FROM event')
-        table_event = c.fetchall()
+    c.execute('SELECT * FROM jidoukaikan')
+    table_jidoukaikan = c.fetchall()
+    c.execute('SELECT * FROM event')
+    table_event = c.fetchall()
 
     conn.close()
 
@@ -73,7 +38,75 @@ def index():
     else:
         username = ''
     
-    return render_template('index.html', table1 = table_jidoukaikan,table2 = table_event, username = username)
+    return render_template('index.html', table1 = table_jidoukaikan, table2 = table_event, username = username)
+
+@app.route('/search_genre',methods=['POST'])
+def genre():
+
+    #データベースからのデータ取得
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+
+    if request.method == 'POST':
+
+        #フォームの値の取得
+        genre = request.form['genre']
+
+        query = "SELECT * FROM event WHERE genre = '" + genre + "'"
+        table_event = c.execute(query).fetchall()
+
+    conn.close()
+
+    #上部に表示するユーザー名の取得
+    username = session.get('username')
+    if username:
+        pass
+    else:
+        username = ''
+    
+    return render_template('result_genre.html', table = table_event, username = username, genre = genre)
+
+@app.route('/search_dist',methods=['POST'])
+def dist():
+
+    #データベースからのデータ取得
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+
+    if request.method == 'POST':
+
+        #フォームの値の取得
+        dist = request.form['dist']
+        #genre = request.form['genre']
+
+        #座標リストの作成と統合
+        c.execute('SELECT lat FROM jidoukaikan')
+        lat = c.fetchall()
+        lat = np.array(lat)
+        c.execute('SELECT lon FROM jidoukaikan')
+        lon = c.fetchall()
+        lon = np.array(lon)
+        latlon = np.stack((lat,lon), axis=1)
+
+        #距離dictの作成
+        dist_l = cal_distance(latlon)
+        dist_l = {k: v for k,v in dist_l.items() if float(v) <= float(dist)}
+        dist_l = sorted(dist_l.items(),reverse=True)
+        ids = [elem[0]+1 for elem in dist_l] #条件を満たすidの配列
+        query = f"SELECT * FROM jidoukaikan WHERE id IN ({','.join(['?']*len(ids))})"
+        table_jidoukaikan = c.execute(query, ids).fetchall()
+        conn.close()
+
+        #上部に表示するユーザー名の取得
+        username = session.get('username')
+        if username:
+            pass
+        else:
+            username = ''
+        
+        return render_template('result_dist.html', table = table_jidoukaikan, username = username, dist = dist)
+    else:
+        redirect('/')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -154,6 +187,7 @@ def chat(name):
         author = session.get('username')
         content = request.form['content']
         date = datetime.datetime.now()
+        date = date[:-7]
         c = conn.cursor()
         c.execute(f'INSERT INTO board_{name} (author, content, date) VALUES (?, ?, ?)', (author, content, date))
         conn.commit()

@@ -2,11 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import time
 from tqdm import tqdm
-import math
 from geopy.distance import geodesic
 from geopy.geocoders import Nominatim
-import geocoder
 
+'''
 def get_lat_lon_from_address(address_l):
     """
     address_lにlistの形で住所を入れてあげると、latlonsという入れ子上のリストで緯度経度のリストを返す関数。
@@ -28,21 +27,20 @@ def get_lat_lon_from_address(address_l):
             time.sleep(10)
     print(latlons)
     return latlons
-
-def address_2_lonlat(address_l):
-    geo = Nominatim(user_agent="myapp")
-    for address in address_l:
-        location = geo.geocode("東京タワー")
+'''
     
-
 def get_location():
     geo_request_url = 'https://get.geojs.io/v1/ip/geo.json'
     geo_data = requests.get(geo_request_url).json()
     location = [geo_data['latitude'],geo_data['longitude']]
-    print(location)
     return location
 
-def cal_distance():
-    location = get_location
-    
-    dis = geodesic(TokyoStation, ShibuyaStation).km
+def cal_distance(coord_l):
+    location = get_location()
+
+    dist_l = {}
+    for i,coord in enumerate(coord_l):
+        dis = geodesic(location, coord).km
+        dist_l[i] = dis
+
+    return dist_l

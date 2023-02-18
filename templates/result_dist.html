@@ -1,0 +1,20 @@
+{% extends "layout.html " %}
+{% block content %}
+
+<main>
+  <h1>距離：&nbsp;{{dist}}km&nbsp;以内</h1>
+
+  <div id="tab1" class="table">
+    {% for elem in table %}
+    <div class="table1-box">
+      <p class="name">{{ elem[1] }}</p>
+      <p class="address">{{ elem[2] }}</p>
+      <p class="access">{{ elem[4] }}</p>
+      <p class="tel1">{{ elem[5] }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+</main>
+
+{% endblock %}
