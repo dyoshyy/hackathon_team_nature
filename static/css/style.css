@@ -7,8 +7,8 @@
 body {
   margin: 0;
   font-family: Montserrat;
-  color: #ffffff;
-  background-color: rgb(129, 129, 129);
+  color: black;
+  background-color: #FFF5E1;
 }
 
 /* *********************************
@@ -18,7 +18,7 @@ header {
   height: 60px;
   width: 100%;
   padding: 0px 15px;
-  background-color: rgb(41, 61, 99);
+  background-color: #749B71;
   position: fixed;
   top: 0;
   z-index: 10;
