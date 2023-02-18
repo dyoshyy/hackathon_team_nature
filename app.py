@@ -1,6 +1,10 @@
 from flask import Flask, render_template, Request, request, session, redirect, url_for
 import sqlite3
 import datetime
+from geo import get_lat_lon_from_address
+from geopy.distance import geodesic
+from geopy.geocoders import Nominatim
+
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
 
@@ -14,17 +18,52 @@ def close_db_connection(exception):
     conn = get_db_connection()
     conn.close()
 
-@app.route('/')
+@app.route('/',methods=['GET', 'POST'])
 def index():
+
     #データベースからのデータ取得
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
 
-    c.execute('SELECT * FROM jidoukaikan')
-    table_jidoukaikan = c.fetchall()
-    c.execute('SELECT * FROM event')
+    if request.method == 'POST':
 
-    table_event = c.fetchall()
+        c.execute('SELECT region FROM jidoukaikan')
+        address_list = c.fetchall()
+        address_list = list(address_list)
+
+        latlons = []
+        for i,address in enumerate(address_list):
+            add = address[0]
+            #print(address)
+            if '札幌市' not in add:
+                add = '札幌市' + str(add)
+            if '北海道' not in add:
+                add = '北海道' + str(add)
+            pos = add.find('丁目') + 2
+            add = add[:pos]
+            address_list[i] = add
+        geolocator = Nominatim(user_agent="user-id")
+        for address in address_list:
+            location = geolocator.geocode(address)
+            if location:
+                latlons.append((location.latitude,location.longitude))
+                #print(location.latitude,location.longitude)
+        
+        print(latlons)
+
+        c.execute('SELECT * FROM jidoukaikan')
+        table_jidoukaikan = c.fetchall()
+        c.execute('SELECT * FROM event')
+        table_event = c.fetchall()
+        #c.execute('SELECT * FROM event' + query2)
+        #table_event = c.fetchall()
+
+    else:
+        c.execute('SELECT * FROM jidoukaikan')
+        table_jidoukaikan = c.fetchall()
+        c.execute('SELECT * FROM event')
+        table_event = c.fetchall()
+
     conn.close()
 
     #上部に表示するユーザー名の取得

@@ -2,26 +2,28 @@
 {% block content %}
 <style>
   .table {
-  display: none;
-}
+    display: none;
+  }
 
-.table:target {
-  display: block;
-}
+  .table:target {
+    display: block;
+  }
 
- .tab{
-  display: flex;
-  margin:  auto;
-  color: aliceblue;
-  font-size: 24px;
- }
+  .tab {
+    display: flex;
+    margin: auto;
+    color: aliceblue;
+    font-size: 24px;
+  }
 
- </style>
+
+</style>
 
 <main>
   <div class="tab">
     <a href="#tab1">児童会館</a>
     <a href="#tab2">イベント</a>
+    <a href="#tab3">条件指定</a>
   </div>
 
   <div id="tab1" class="table">
@@ -35,16 +37,17 @@
           {% endfor %}
   </div>
 
-  <div id="tab2" class="table">
-        {% for elem in table2 %}
-        <div class="table2-box">
-          <p class="event">{{ elem[1] }}</p>
-          <p class="organization">{{ elem[2] }}</p>
-          <p class="location">{{ elem[3] }}</p>
-          <p class="genre">{{ elem[4] }}</p>
-          <p class="tel2">{{ elem[5] }}</p>
-        </div>
-        {% endfor %}
+<div id="tab2" class="table">
+  {% for elem in table2 %}
+  <div class="table2-box">
+    <p class="event">{{ elem[1] }}</p>
+    <p class="organization">{{ elem[2] }}</p>
+    <p class="location">{{ elem[3] }}</p>
+    <p class="genre">{{ elem[4] }}</p>
+    <p class="tel2">{{ elem[5] }}</p>
   </div>
+  {% endfor %}
+</div>
+
 </main>
 {% endblock %}
