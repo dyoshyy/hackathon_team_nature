@@ -63,6 +63,15 @@
   border-radius: 10px;
 }
 .tab a:visited{color: #ffffff;}
+.table a{color: #000000;}
+.table a:visited{color: #000000;}
+.table a{
+  line-height: 30px;
+  transition: 0.3s;
+}
+.table a:hover{
+  background-color: #e2f3e1;
+}
 </style>
 
 <main>
@@ -86,11 +95,12 @@
   <div id="tab2" class="table">
     {% for elem in table2 %}
     <div class="table2-box">
-      <p class="event">{{ elem[1] }}</p>
+      <p class="event"><a href ="{{elem[7]}}">{{ elem[1] }}</a></p>
       <p class="organization">{{ elem[2] }}</p>
       <p class="location">{{ elem[3] }}</p>
-      <p class="genre">{{ elem[4] }}</p>
-      <p class="tel2">{{ elem[5] }}</p>
+      <p class="date">{{ elem[4] }}</p>
+      <p class="genre">{{ elem[5] }}</p>
+      <p class="tel2">{{ elem[6] }}</p>
     </div>
     {% endfor %}
   </div>
