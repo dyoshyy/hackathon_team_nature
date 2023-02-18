@@ -29,6 +29,22 @@
     .post{
       text-align: left;
     }
+
+    h2{
+      margin-left: 25px;
+      margin-bottom: 5px;
+      font-size: 28px;
+
+    }
+    .post-content{
+      border-radius: 5px 5px 5px 5px;
+      margin-top: 5px;
+      margin-left: 45px;
+      margin-right: 25px;
+      margin-bottom: 25px;
+      background: white;
+      font-size: 25px;
+    }
   </style>
 
 <main>
@@ -44,7 +60,7 @@
   {% for post in posts %}
   <div class = 'post'>
   <h2>{{post['author']}} &nbsp;{{post['date']}}</h2>
-  <p>{{ post['content'] }}</p>
+  <p class="post-content">{{ post['content'] }}</p>
   {% endfor %}
   </div>
 </main>
