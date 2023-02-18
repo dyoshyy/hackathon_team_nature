@@ -25,27 +25,26 @@
   </div>
 
   <div id="tab1" class="table">
-    {% for elem in table1 %}
-    <div class="table1-box">
-          <p class="name">{{ elem[1] }}</p>
-          <p class="address">{{ elem[2] }}</p>
-          <p class="access">{{ elem[4] }}</p>
-          <p class="tel1">{{ elem[5] }}</p>
-    </div>
-    {% endfor %}
-</div>
-
-<div id="tab2" class="table">
-  {% for elem in table2 %}
-  <div class="table2-box">
-    <p class="event">{{ elem[1] }}</p>
-    <p class="organization">{{ elem[2] }}</p>
-    <p class="location">{{ elem[3] }}</p>
-    <p class="genre">{{ elem[4] }}</p>
-    <p class="tel2">{{ elem[5] }}</p>
+          {% for elem in table1 %}
+          <div class="table1-box">
+                <p class="name">{{ elem[1] }}</p>
+                <p class="address">{{ elem[2] }}</p>
+                <p class="access">{{ elem[4] }}</p>
+                <p class="tel1">{{ elem[5] }}</p>
+          </div>
+          {% endfor %}
   </div>
-  {% endfor %}
-</div>
 
+  <div id="tab2" class="table">
+        {% for elem in table2 %}
+        <div class="table2-box">
+          <p class="event">{{ elem[1] }}</p>
+          <p class="organization">{{ elem[2] }}</p>
+          <p class="location">{{ elem[3] }}</p>
+          <p class="genre">{{ elem[4] }}</p>
+          <p class="tel2">{{ elem[5] }}</p>
+        </div>
+        {% endfor %}
+  </div>
 </main>
 {% endblock %}
