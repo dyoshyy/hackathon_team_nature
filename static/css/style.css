@@ -114,6 +114,131 @@ main {
   font-size: 24px;
 }
 
+/* table1の設定 */
+.table1-box {
+  position: relative;
+  width: 600px;
+  height:200px;
+  left:50px;
+
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 10px 10px 10px 10px;
+  background: white;
+
+  margin-top: 25px;
+  margin-left: 80px;
+  padding: 10px;
+  float:left;
+  width:40%;
+}
+
+.name {
+  position: absolute;
+  top: 5px;
+  width: 640px;
+  height: 25px;
+
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 24px;
+  
+  color: #000000;
+}
+
+.address {
+  position: absolute;
+  top: 50px;
+  width: 640px;
+  height: 30px;
+  
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  color: #757575;
+}
+
+.access {
+  position: absolute;
+  top: 100px;
+  width: 640px;
+  height: 30px;
+}
+
+.tel1 {
+  position: absolute;
+  top: 150px;
+  width: 640px;
+  height: 30px;
+}
+
+/* table2の設定 */
+.table2-box {
+  position: relative;
+  width: 600px;
+  height:250px;
+  left:50px;
+
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 10px 10px 10px 10px;
+  background: white;
+
+  margin-top: 25px;
+  margin-left: 80px;
+  padding: 10px;
+  float:left;
+  width:40%;
+}
+
+.event {
+  position: absolute;
+  top: 5px;
+  width: 640px;
+  height: 25px;
+
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  
+  color: #000000;
+}
+
+.organization {
+  position: absolute;
+  top: 80px;
+  width: 640px;
+  height: 30px;
+  
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  color: #757575;
+}
+
+.location {
+  position: absolute;
+  top: 100px;
+  width: 640px;
+  height: 80px;
+
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.genre {
+  position: absolute;
+  top: 190px;
+  width: 640px;
+  height: 30px;
+}
+
+.tel2 {
+  position: absolute;
+  top: 210px;
+  width: 640px;
+  height: 30px;
+}
+
 /* *********************************　
 footerの設定
 *********************************** */
