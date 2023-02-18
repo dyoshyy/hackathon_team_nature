@@ -67,6 +67,8 @@ td {
 #tab2 th:nth-child(4), td:nth-child(4) {
   width: 8%;
 }
+
+
 </style>
 
 
@@ -84,6 +86,7 @@ td {
           <th>住所</th>
           <th>アクセス</th>
           <th>電話番号</th>
+          <th>レビュー</th>
         </tr>
       </thead>
       <tbody>
@@ -93,11 +96,32 @@ td {
           <td>{{ elem[2] }}</td>
           <td>{{ elem[4] }}</td>
           <td>{{ elem[5] }}</td>
+          <td>
+
+            <div>
+              <p>評価の平均値: <span id="average-rating"></span></p>
+            </div>
+
+            <div id="reviews"></div>
+            <form onsubmit="addReview(event)">
+              <label for="rating">評価:</label>
+              <select id="rating" required>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+              <button type="submit">投稿する</button>
+            </form>
+
+          </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+  <div id="reviews"></div>
 
   <div id="tab2" class="table">
     <table>
@@ -123,6 +147,50 @@ td {
       </tbody>
     </table>
   </div>
+
+  
+    <script>
+      const productId="elem[1]"
+      // レビューを追加する関数
+      function addReview(event) {
+        event.preventDefault();
+        const rating = document.getElementById("rating").value; 
+        
+        const review = { rating }; 
+        let reviews = JSON.parse(localStorage.getItem(productId)) || [];
+        reviews.push(review);
+        localStorage.setItem(productId, JSON.stringify(reviews));
+
+        
+        showAverageRating();
+      }
+
+      // レビューを表示する関数
+      function showReviews() {
+        let reviews = JSON.parse(localStorage.getItem(productId)) || [];
+        let reviewsHTML = "";
+        reviews.forEach((review) => {
+          reviewsHTML += `<div><p>評価: ${review.rating}/5</p></div>`;
+        });
+        document.getElementById("reviews").innerHTML = reviewsHTML;
+      }
+
+      // 評価の平均値を表示する関数
+      function showAverageRating() {
+        let reviews = JSON.parse(localStorage.getItem(productId)) || [];
+        let totalRating = 0;
+        reviews.forEach((review) => {
+          totalRating += parseInt(review.rating);
+        });
+        let averageRating = totalRating / reviews.length;
+        document.getElementById("average-rating").textContent = averageRating.toFixed(1);
+
+        localStorage.setItem(productId + "_rating", averageRating.toFixed(1)); // 平均評価をLocal Storage
+      }
+
+      
+      showAverageRating();
+    </script>
 
 </main>
 {% endblock %}
