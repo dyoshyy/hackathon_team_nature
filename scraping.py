@@ -13,7 +13,7 @@ def event():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS event (id INTEGER PRIMARY KEY, name TEXT, org TEXT, location TEXT,genre, tel TEXT,web TEXT)
+        CREATE TABLE IF NOT EXISTS event (id INTEGER PRIMARY KEY, name TEXT, org TEXT, location TEXT,date TEXT, genre TEXT, tel TEXT,web TEXT)
     ''')
     
     for page in range(1,5):
@@ -38,8 +38,8 @@ def event():
             genres = genres[7:]
             #print(title,org,location,date,genres)
             cursor.execute('''
-                INSERT INTO event (name,org,location,genre) VALUES (?, ?, ?, ?)
-            ''', (title, org, location, genres))
+                INSERT INTO event (name,org,location,date,genre) VALUES (?, ?, ?, ?, ?)
+            ''', (title, org, location, date, genres))
 
     conn.commit()
     cursor.execute('''
