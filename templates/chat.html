@@ -25,6 +25,10 @@
       margin-left: 5px;
       cursor: pointer;
     }
+
+    .post{
+      text-align: left;
+    }
   </style>
 
 <main>
@@ -38,8 +42,10 @@
   </div>
 
   {% for post in posts %}
+  <div class = 'post'>
   <h2>{{post['author']}} &nbsp;{{post['date']}}</h2>
   <p>{{ post['content'] }}</p>
   {% endfor %}
+  </div>
 </main>
 {% endblock %}
