@@ -20,16 +20,22 @@ def index():
     #データベースからのデータ取得
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
+
     c.execute('SELECT * FROM jidoukaikan')
-    list = c.fetchall()
+    table_jidoukaikan = c.fetchall()
+    c.execute('SELECT * FROM event')
+
+    table_event = c.fetchall()
     conn.close()
+
+    #上部に表示するユーザー名の取得
     username = session.get('username')
     if username:
         pass
     else:
         username = ''
     
-    return render_template('index.html', list = list, username = username)
+    return render_template('index.html', table1 = table_jidoukaikan,table2 = table_event, username = username)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

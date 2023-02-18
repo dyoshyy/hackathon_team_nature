@@ -1,0 +1,128 @@
+{% extends "layout.html " %}
+{% block content %}
+<style>
+  .table {
+  display: none;
+}
+
+.table:target {
+  display: block;
+}
+
+ .tab{
+  display: flex;
+  margin:  auto;
+  color: aliceblue;
+  font-size: 24px;
+ }
+
+ /* 表（数値を入力する部分）の設定 */
+table {
+  width: 90%;
+  height: 10px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 5px 5px;
+  table-layout: fixed;
+  font-size: 20px;
+}
+th {
+  width: 30%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  background-color: rgb(41, 61, 99);
+}
+td {
+  width: 70%;
+  text-align: center;
+  background-color: rgb(73, 73, 73);
+  border: 2px solid rgba(115, 210, 230);
+  size: 20px;
+}
+
+
+/* 各列の幅を指定 */
+
+#tab1 th:first-child, td:first-child {
+  width: 10%;
+}
+#tad1 th:nth-child(2), td:nth-child(2) {
+  width: 50%;
+}
+#tab1 th:nth-child(4), td:nth-child(4) {
+  width: 10%;
+}
+
+#tab2 th:first-child, td:first-child {
+  width: 15%;
+}
+#tad2 th:nth-child(2), td:nth-child(2) {
+  width: 4%;
+}
+#tab2 th:nth-child(4), td:nth-child(4) {
+  width: 8%;
+}
+</style>
+
+
+<main>
+  <div class="tab">
+    <a href="#tab1">児童会館</a>
+    <a href="#tab2">イベント</a>
+  </div>
+
+  <div id="tab1" class="table">
+    <table>
+      <thead>
+        <tr>
+          <th>施設名</th>
+          <th>住所</th>
+          <th>アクセス</th>
+          <th>電話番号</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for elem in table1 %}
+        <tr>
+          <td>{{ elem[1] }}</td>
+          <td>{{ elem[2] }}</td>
+          <td>{{ elem[4] }}</td>
+          <td>{{ elem[5] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div id="tab2" class="table">
+    <table>
+      <thead>
+        <tr>
+          <th>イベント名</th>
+          <th>組織</th>
+          <th>開催場所</th>
+          <th>ジャンル</th>
+          <th>電話番号</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for elem in table2 %}
+        <tr>
+          <td>{{ elem[1] }}</td>
+          <td>{{ elem[2] }}</td>
+          <td>{{ elem[3] }}</td>
+          <td>{{ elem[4] }}</td>
+          <td>{{ elem[5] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</main>
+{% endblock %}

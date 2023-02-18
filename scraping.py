@@ -1,32 +1,53 @@
 import requests
 from bs4 import BeautifulSoup
 import sqlite3
-import shutil
 
 def main():
-    #volunteer()
-    jidoukaikan()
+    event()
+    #jidoukaikan()
     
 
 
-def volunteer():
-    #URL = "https://activo.jp/hokkaido/children"
-    URL = "https://activo.jp/searchresult?area[]=1&area_keywords=&genre[]=2&status[]=1"
-    page = requests.get(URL)
-    soup = BeautifulSoup(page.content, "html.parser")
+def event():
 
-    # 要素を検索する
-    events = soup.select("#gtmMainSearch > article.resultBox.jsResultBox.isWideInside")
-    #print(events)
-    # スクレイピングしたデータを表示する
-    for i,event in enumerate(events):
-        title = event.find('h3').text
-        location = event.find('li',class_='p_icon isGetAreas resultElementsItem').text
-        date = event.find('li',class_='p_icon isGetDatesOrTerms resultElementsItem').text
-        print(i,title,end=' | ')
-        print(location,end=' | ')
-        #print()
-        print(date)
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS event (id INTEGER PRIMARY KEY, name TEXT, org TEXT, location TEXT,genre, tel TEXT,web TEXT)
+    ''')
+    
+    for page in range(1,5):
+
+        
+
+        URL = "https://activo.jp/hokkaido/children?page=" + str(page)
+        page = requests.get(URL)
+        soup = BeautifulSoup(page.content, "html.parser")
+
+        # 要素を検索する
+        events = soup.select("#gtmMainSearch > article.resultBox.jsResultBox.isWideInside")
+        #print(events)
+        # スクレイピングしたデータを表示する
+        for event in events:
+            title = event.find('h3').text
+            org = event.find(class_="isUserName").text
+            location = event.find('li',class_='p_icon isGetAreas resultElementsItem').text
+            if event.find('li',class_='p_icon isGetDatesOrTerms resultElementsItem'):
+                date = event.find('li',class_='p_icon isGetDatesOrTerms resultElementsItem').text
+            genres = event.find('li',class_='p_icon isGenres resultElementsItem').text
+            genres = genres[7:]
+            #print(title,org,location,date,genres)
+            cursor.execute('''
+                INSERT INTO event (name,org,location,genre) VALUES (?, ?, ?, ?)
+            ''', (title, org, location, genres))
+
+    conn.commit()
+    cursor.execute('''
+    SELECT * FROM event
+    ''')
+    for row in cursor.fetchall():
+        print(row)
+    conn.close()
 
 def jidoukaikan():
 
